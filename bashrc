@@ -65,6 +65,8 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
+export GOPATH="$HOME/go"
+
 #######################################################
 # MACHINE SPECIFIC ALIAS'S
 #######################################################
@@ -86,6 +88,11 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Set alias for kubectx
+[ -f `which kubectx` ];
+alias kls='kubectx'
+
 
 # Edit this .bashrc file
 alias ebrc='joe ~/.bashrc'
@@ -124,20 +131,9 @@ alias bd='cd "$OLDPWD"'
 alias rmd='/bin/rm  --recursive --force --verbose '
 
 # Alias's for multiple directory listing commands
-alias la='ls -Alh' # show hidden files
-alias ls='ls -aFh --color=always' # add colors and file type extensions
-alias lx='ls -lXBh' # sort by extension
-alias lk='ls -lSrh' # sort by size
-alias lc='ls -lcrh' # sort by change time
-alias lu='ls -lurh' # sort by access time
-alias lr='ls -lRh' # recursive ls
-alias lt='ls -ltrh' # sort by date
-alias lm='ls -alh |more' # pipe through 'more'
-alias lw='ls -xAh' # wide listing format
-alias ll='ls -Fls' # long listing format
-alias labc='ls -lap' #alphabetical sort
-alias lf="ls -l | egrep -v '^d'" # files only
-alias ldir="ls -l | egrep '^d'" # directories only
+alias ls='exa -bghHiS --git'
+alias ll='exa -bghHliS --git'
+alias la='exa -bghHlaiS --git'
 
 # alias chmod commands
 alias mx='chmod a+x'
@@ -472,7 +468,7 @@ function whatsmyip ()
 	# /sbin/ifconfig |grep -B1 "inet addr" |awk '{ if ( $1 == "inet" ) { print $2 } else if ( $2 == "Link" ) { printf "%s:" ,$1 } }' |awk -F: '{ print $1 ": " $3 }';
 
 	# Internal IP Lookup
-	echo -n "Internal IP: " ; /sbin/ifconfig eth0 | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'
+	echo -n "Internal IP: " ; /sbin/ifconfig wlp4s0 | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'
 
 	# External IP Lookup
 	echo -n "External IP: " ; wget http://smart-ip.net/myip -O - -q
